@@ -60,7 +60,7 @@ The statistics are listed in the below table:
 
 ##### Model
 
-![model](https://github.com/hanjiale/language-identification-xlm/blob/main/figure/model.pdf)
+![model](https://github.com/hanjiale/language-identification-xlm/blob/main/figure/model.png)
 
 We provide two methods based on xlm-RoBERTa:
 * fine-tuning: a simple classifier on top of xlm-RoBERTa.
@@ -99,7 +99,7 @@ It can be observed that prompt-tuning is more effective in the extremely low res
 Though effective, the method can only detect one language in a sentence. We would like to address the language identification of
 codemixed text [2] in our future work. We have a rough idea, as shown in the figure below, which performs token-level classification.
 
-![model](https://github.com/hanjiale/language-identification-xlm/blob/main/figure/model_codemix.pdf)
+![model](https://github.com/hanjiale/language-identification-xlm/blob/main/figure/model_codemix.png)
 
 Due to the lack of codemixed data, we have not implemented this model.
 We find an [off-the-shelf tool](https://github.com/microsoft/CodeMixed-Text-Generator) that helps automatic generation of grammatically valid synthetic codemixed data. Therefore, we can generate data we need and hopefully train the model.
