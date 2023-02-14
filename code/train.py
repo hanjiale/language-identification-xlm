@@ -39,7 +39,6 @@ def evaluate(model, val_dataloader, isTest=False):
 
 
 def train(args, model, train_dataset, val_dataset, test_dataset):
-
     val_batch_size = args.per_gpu_eval_batch_size
     test_sampler = SequentialSampler(test_dataset)
     test_dataloader = DataLoader(test_dataset, sampler=test_sampler, batch_size=val_batch_size)
@@ -119,7 +118,9 @@ if __name__ == "__main__":
         tokenizer=tokenizer,
         format="csv"
     )
-    model = get_model(Model_ft, num_labels=test_dataset.num_labels) if tuning_type == "ft" else get_model(Model_pt, mask_token_id=tokenizer.mask_token_id, label_name=test_dataset.lang_names_ids)
+    model = get_model(Model_ft, num_labels=test_dataset.num_labels) if tuning_type == "ft" else get_model(Model_pt,
+                                                                                                          mask_token_id=tokenizer.mask_token_id,
+                                                                                                          label_name=test_dataset.lang_names_ids)
     if not args.isTest:
         train_dataset = Dataset(
             path=args.data_dir,
@@ -136,6 +137,10 @@ if __name__ == "__main__":
         )
 
         train(args, model, train_dataset, val_dataset, test_dataset)
-    else:
-        evaluate(model, test_dataset, isTest)
 
+    else:
+        # model.load_state_dict(torch.load(args.output_dir + "/" + 'best_parameter' + ".pkl"))
+        val_batch_size = args.per_gpu_eval_batch_size
+        test_sampler = SequentialSampler(test_dataset)
+        test_dataloader = DataLoader(test_dataset, sampler=test_sampler, batch_size=val_batch_size)
+        evaluate(model, test_dataloader, isTest)
